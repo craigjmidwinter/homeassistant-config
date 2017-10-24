@@ -1,0 +1,16 @@
+._*
+*__pycache__
+openhab.cfg
+harmony_harmony_hub.conf
+harmony_harmonyremote.conf
+home-assistant.log
+home-assistant_v2.db
+insteon_local_lights.conf
+insteon_local_switch.conf
+tts
+known_devices.yaml
+.HA_VERSION
+.uuid
+phue.conf
+plex.conf
+emulated_hue_ids.json

@@ -1,0 +1,150 @@
+- alias: 'Sunset'
+  initial_state: 'on'
+  trigger:
+    platform: sun
+    event: sunset
+    offset: "-01:00:00"
+  condition:
+    - condition: state
+      entity_id: group.trackers
+      state: home
+  action:
+    service: scene.turn_on
+    entity_id: scene.evening
+
+- alias: 'Late Evening'
+  initial_state: 'on'
+  trigger:
+    platform: time
+    at: '21:30:00'    
+  condition:
+    - condition: state
+      entity_id: group.trackers
+      state: home
+    - condition: state
+      entity_id: 'sun.sun'
+      state: 'below_horizon'  
+  action:
+    service: scene.turn_on
+    entity_id: scene.late_evening
+
+- alias: 'Night'
+  initial_state: 'on'
+  trigger:
+    platform: time
+    at: '00:00:00'    
+  condition:
+    - condition: state
+      entity_id: group.trackers
+      state: home 
+  action:
+    - service: scene.turn_on
+      entity_id: scene.night
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.night_mode
+    - service: alarm_control_panel.alarm_arm_home
+
+- alias: 'Morning - weekday'
+  initial_state: 'on'
+  trigger:
+    platform: time
+    at: '07:00:00'    
+  condition:
+    - condition: state
+      entity_id: group.trackers
+      state: home 
+    - condition: time    
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri      
+  action:
+    - service: scene.turn_on
+      entity_id: scene.morning
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.night_mode
+
+- alias: 'Morning - weekend'
+  initial_state: 'on'
+  trigger:
+    platform: time
+    at: '09:00:00'    
+  condition:
+    - condition: state
+      entity_id: group.trackers
+      state: home 
+    - condition: time    
+      weekday:
+        - sat
+        - sun     
+  action:
+    - service: scene.turn_on
+      entity_id: scene.morning
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.night_mode      
+
+- alias: 'Bedtime'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: input_boolean.bedtime
+    to: 'on'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.bedtime
+  - service: homeassistant.turn_off
+    entity_id: input_boolean.bedtime
+
+- alias: Generate graph
+  initial_state: 'on'
+  trigger:
+    platform: event
+    event_type: homeassistant_start
+  action:
+    - service: shell_command.generate_graph
+
+- alias: 'Jessica'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: input_boolean.jessica
+    to: 'on'
+  action:
+  - service: media_player.play_media
+    data:
+      entity_id: media_player.everywhere
+      media_content_id: http://149walnut.publicvm.com:8123/local/audio/tmd.mp3
+      media_content_type: audio/mp3
+  - service: scene.turn_on
+    entity_id: scene.jessica
+    
+- alias: 'Jessica off'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: input_boolean.jessica
+    to: 'off'
+  action:
+  - service: media_player.play_media
+    data:
+      entity_id: media_player.everywhere
+      media_content_id: http://149walnut.publicvm.com:8123/local/audio/recordscratch.mp3
+      media_content_type: audio/mp3
+  - service: scene.turn_on
+    entity_id: scene.evening
+
+
+
+- alias: 'Evening'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: input_boolean.evening
+    to: 'on'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.evening
+  - service: homeassistant.turn_off
+    entity_id: input_boolean.evening

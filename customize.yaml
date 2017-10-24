@@ -1,0 +1,42 @@
+light.upstairs_corridor:
+  friendly_name: Upstairs Corridor
+light.kitchen_1:
+  hidden: true
+light.kitchen_2:
+  hidden: true
+light.kitchen_3:
+  hidden: true
+light.bedroom_fan_1:
+  hidden: true
+light.bedroom_fan_2:
+  hidden: true
+light.living_room:
+  hidden: true
+light.goallight:
+  hidden: true
+light.downstairs:
+  hidden: true
+light.dimmable_light_1:
+  hidden: true
+light.dimmable_light_2:
+  hidden: true
+light.bedroom:
+  hidden: true
+switch.bedroom_ac:
+  friendly_name: Bedroom AC
+switch.main_floor_ac:
+  friendly_name: Main Floor AC
+light.dining_room:
+  friendly_name: Dining Room
+light.livingroom_main:
+  friendly_name: Livingroom Main
+light.office_main:
+  friendly_name: Office Main
+light.kitchen_wall:
+  friendly_name: Kitchen Wall Sconces
+light.kitchen_pendulums:
+  friendly_name: Kitchen Pendulums
+light.office_desk_lamp:
+  friendly_name: Office Desk Lamp
+light.bathroom:
+  friendly_name: Bathroom

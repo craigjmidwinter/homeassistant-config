@@ -1,0 +1,42 @@
+- name: livingroom_movie
+  entities:
+    light.livingroom_main:
+      state: on
+      brightness: 150
+    light.tv_strips: on
+    light.kitchen_cabinets: on
+    light.credenza: on
+    light.dining_room:
+      state: on
+      brightness: 80
+    light.christmas_tree: off
+    light.livingroom_lamp: off
+    light.entryway: off
+    light.orb:
+      state: on
+      brightness: 100
+    light.porch: off
+    light.bonus_room: off
+    group.kitchen_main: off
+    light.kitchen_pendulums:
+      state: on
+      brightness: 50
+    light.kitchen_wall:
+      state: on
+      brightness: 50
+
+- name: bedroom_movie_play
+  entities:
+    group.bedroom_fan: off
+    light.craigs_bedroom_lamp: off
+    light.jessicas_bedroom_lamp: off
+
+- name: bedroom_movie_stop
+  entities:
+   group.bedroom_fan: off
+   light.craigs_bedroom_lamp:
+      state: on
+      brightness: 100
+   light.jessicas_bedroom_lamp:
+      state: on
+      brightness: 100

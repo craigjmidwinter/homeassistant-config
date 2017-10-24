@@ -1,0 +1,102 @@
+- alias: 'Someone is Home'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: group.trackers
+    from: 'not_home'
+    to: 'home'
+  condition:
+  - condition: state
+    entity_id: input_boolean.night_mode
+    state: 'off'
+  - condition: state
+    entity_id: 'sun.sun'
+    state: 'below_horizon'      
+  action:
+    service: scene.turn_on
+    entity_id: scene.evening      
+
+- alias: 'Nobody is Home'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: group.trackers
+    from: 'home'
+    to: 'not_home'  
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+  action:
+  - service: scene.turn_on
+    entity_id: scene.away
+  - service: scene.turn_on
+    entity_id: scene.away
+
+- alias: 'Nobody is Home'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: group.trackers
+    from: 'home'
+    to: 'not_home'  
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+  condition:
+  - condition: state
+    entity_id: alarm_control_panel.totalconnectclient 
+    state: 'disarmed'
+  action:
+  - service: alarm_control_panel.alarm_arm_home
+
+- alias: 'Jess is home'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: device_tracker.jess_iphone
+    to: 'home'
+  condition:
+  - condition: state
+    entity_id: device_tracker.craig_craig
+    state: 'not_home'
+  action:
+    service: notify.push
+    data:
+      message: "Jess is home"
+
+- alias: 'Jess is leaving the gym'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: device_tracker.jess_iphone
+    from: 'gym'
+  action:
+    service: notify.push
+    data:
+      message: "Jess is leaving the gym"
+
+- alias: 'Jess has arrived the gym'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: device_tracker.jess_iphone
+    to: 'gym'
+  action:
+    service: notify.push
+    data:
+      message: "Jess has arrived the gym"
+
+- alias: 'Jess is leaving work'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: device_tracker.jess_iphone
+    from: 'jess_work'
+  action:
+  - service: notify.push
+    data:
+      message: "Jess is leaving work"
+  - service: homeassistant.turn_on
+    entity_id: group.air_conditioners

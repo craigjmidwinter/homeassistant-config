@@ -1,0 +1,103 @@
+- name: Night
+  entities:
+    group.all_lights: off
+    light.livingroom_lamp: on
+    light.kitchen_cabinets: on
+    input_boolean.night_mode: on
+    alarm_control_panel.totalconnectclient: armed_home
+
+- name: Morning
+  entities:
+    group.main_floor: on
+    light.bathroom: on
+    input_boolean.night_mode: off
+
+- name: Evening
+  entities:
+    light.livingroom_main:
+      state: on
+      brightness: 255
+    light.porch:
+      state: on
+      brightness: 255
+      rgb_color: [255, 212, 132]
+    light.credenza:
+      state: off
+    light.tv_strips:
+      state: off
+    light.craigs_bedroom_lamp:
+      state: on
+      brightness: 220
+      rgb_color: [255, 184, 78]
+    light.kitchen_1:
+      state: on
+    light.bonus_room:
+      state: on
+      brightness: 255
+      rgb_color: [255, 212, 132]
+    light.office_main:
+      state: on
+      brightness: 255
+    light.dining_room:
+      state: on
+      brightness: 255
+    light.kitchen_3:
+      state: on
+    light.jessicas_bedroom_lamp:
+      state: on
+      brightness: 225
+      rgb_color: [255, 187, 83]
+    light.kitchen_2:
+      state: on
+    light.basement:
+      state: off
+    light.entryway:
+      state: on
+      brightness: 255
+      rgb_color: [255, 212, 132]
+    light.orb:
+      state: off
+    light.bathroom:
+      state: off
+    light.kitchen_cabinets:
+      state: on
+      brightness: 254
+      rgb_color: [255, 0, 2]
+    light.upstairs_corridor:
+      state: on
+      brightness: 255
+    light.bedroom_fan_1:
+      state: on
+      brightness: 254
+    light.tv:
+      state: on
+      brightness: 103
+      rgb_color: [240, 132, 0]
+    light.livingroom_lamp:
+      state: on
+      brightness: 254
+      rgb_color: [255, 180, 71]
+    light.office_desk_lamp:
+      state: off
+
+- name: Late Evening
+  entities:
+    group.bedroom_fan: off      
+    group.office: off
+    alarm_control_panel.totalconnectclient: armed_home
+
+- name: Bedtime
+  entities:
+    group.main_floor: off
+    group.office: off
+    light.upstairs_corridor: off
+    light.livingroom_lamp: on
+    light.kitchen_cabinets: on
+    alarm_control_panel.totalconnectclient: armed_home
+
+- name: Away
+  entities:
+    group.all_lights: off  
+    alarm_control_panel.totalconnectclient: armed_home
+    switch.bedroom_ac: off
+    switch.main_floor_ac: off

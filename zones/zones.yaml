@@ -1,0 +1,37 @@
+- name: jess_work
+  latitude: 49.90806039309602
+  longitude: -97.17999469871269
+  radius: 500
+  icon: mdi:briefcase
+
+- name: craig_work
+  latitude: 49.8975488
+  longitude: -97.1406062
+  radius: 500
+  icon: mdi:laptop-mac
+
+- name: polopark
+  latitude: 49.884439
+  longitude: -97.2010444
+  radius: 500
+  icon: mdi:shopping
+
+- name: gym
+  latitude: 49.88692917209834
+  longitude: -97.13475486777551
+  radius: 200
+  icon: mdi:dumbbell
+
+- name: LivingRoom
+  latitude: 49.882584
+  longitude: -97.163657
+  radius: 10
+  icon: mdi:sofa
+  passive: true
+
+- name: Kitchen
+  latitude: 49.882584
+  longitude: -97.163657
+  radius: 10
+  icon: mdi:ic_airline_seat_recline_normal
+  passive: true

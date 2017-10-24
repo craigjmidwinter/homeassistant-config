@@ -1,0 +1,197 @@
+- alias: Fiddle Leaf Fig - water warning 2
+  initial_state: 'on'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.fiddleleaf_fig_moisture
+    below: 15
+  condition:
+    - condition: template
+      value_template: '{{states(''sensor.home_assistant_not_restarted_recently'')}}'
+  action:
+  - service: notify.149twitter
+    data:
+      # Cactus emoticon
+      message: "Fiddle Leaf Fig: What about some water for me? \U0001f335 @craigjward @jess_cable"
+  - service: homeassistant.turn_off
+    entity_id: input_boolean.fiddle_leaf_thanks
+
+- alias: Fiddle Leaf Fig - water warning 3
+  initial_state: 'on'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.fiddleleaf_fig_moisture
+    below: 10
+  condition:
+    - condition: template
+      value_template: '{{states(''sensor.home_assistant_not_restarted_recently'')}}'
+  action:
+  - service: notify.149twitter
+    data:
+      # Skull emoticon
+      message: "Fiddle Leaf Fig: Water me or I will die of thirst. \U0001f480 @craigjward @jess_cable"
+
+- alias: Fiddle Leaf Fig - water warning 4
+  initial_state: 'on'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.fiddleleaf_fig_moisture
+    below: 5
+  action:
+  - service: notify.149twitter
+    data:
+      # Skull emoticon
+      message: "Fiddle Leaf Fig: Help! Water! \U0001f480\U0001f480\U0001f480 @craigjward @jess_cable"
+
+- alias: Fiddle Leaf Fig - enough water
+  initial_state: 'on'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.fiddleleaf_fig_moisture
+    above: 50
+  condition:
+    - condition: template
+      value_template: '{{states(''sensor.home_assistant_not_restarted_recently'')}}'
+    - condition: state
+      entity_id: input_boolean.fiddle_leaf_thanks
+      state: 'off'
+  action:
+  - service: notify.149twitter
+    data:
+      message: "Fiddle Leaf Fig: I'm feeling better, thank you for the water. \U0001f3a0 @craigjward @jess_cable"
+  - service: homeassistant.turn_on
+    entity_id: input_boolean.fiddle_leaf_thanks
+
+
+- alias: Office Ficus - water warning 2
+  initial_state: 'on'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.office_ficus_moisture
+    below: 15
+  condition:
+    - condition: template
+      value_template: '{{states(''sensor.home_assistant_not_restarted_recently'')}}'
+  action:
+  - service: notify.149twitter
+    data:
+      # Cactus emoticon
+      message: "Office Ficus: What about some water for me? \U0001f335 @craigjward @jess_cable"
+  - service: homeassistant.turn_off
+    entity_id: input_boolean.office_ficus_thanks
+
+- alias: Office Ficus - water warning 3
+  initial_state: 'on'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.office_ficus_moisture
+    below: 10
+  condition:
+    - condition: template
+      value_template: '{{states(''sensor.home_assistant_not_restarted_recently'')}}'
+  action:
+  - service: notify.149twitter
+    data:
+      # Skull emoticon
+      message: "Office Ficus: Water me or I will die of thirst. \U0001f480 @craigjward @jess_cable"
+
+- alias: Office Ficus - water warning 4
+  initial_state: 'on'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.office_ficus_moisture
+    below: 5
+  condition:
+    - condition: template
+      value_template: '{{states(''sensor.home_assistant_not_restarted_recently'')}}'
+  action:
+  - service: notify.149twitter
+    data:
+      # Skull emoticon
+      message: "Office Ficus: Help! Water! \U0001f480\U0001f480\U0001f480 @craigjward @jess_cable"
+
+- alias: Office Ficus - enough water
+  initial_state: 'on'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.office_ficus_moisture
+    above: 50
+  condition:
+    - condition: template
+      value_template: '{{states(''sensor.home_assistant_not_restarted_recently'')}}'
+    - condition: state
+      entity_id: input_boolean.office_ficus_thanks
+      state: 'off'
+  action:
+  - service: notify.149twitter
+    data:
+      message: "Office Ficus: I'm feeling better, thank you for the water. \U0001f3a0 @craigjward @jess_cable"
+  - service: homeassistant.turn_on
+    entity_id: input_boolean.office_ficus_thanks
+
+
+- alias: Snake Plant - water warning 2
+  initial_state: 'on'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.snake_plant_moisture
+    below: 15
+  condition:
+    - condition: template
+      value_template: '{{states(''sensor.home_assistant_not_restarted_recently'')}}'
+  action:
+  - service: notify.149twitter
+    data:
+      # Cactus emoticon
+      message: "\U0001F40D: Hsssssss... @craigjward @jess_cable, I'm sirsssssssssty hsssss"
+  - service: homeassistant.turn_off
+    entity_id: input_boolean.snake_plant_thanks
+
+- alias: Snake Plant - water warning 3
+  initial_state: 'on'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.snake_plant_moisture
+    below: 10
+  condition:
+    - condition: template
+      value_template: '{{states(''sensor.home_assistant_not_restarted_recently'')}}'
+  action:
+  - service: notify.149twitter
+    data:
+      # Skull emoticon
+      message: "\U0001F40D: hsssss ssssssomebody pleassse water me. \U0001f480 @craigjward @jess_cable"
+
+- alias: Snake Plant - water warning 4
+  initial_state: 'on'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.snake_plant_moisture
+    below: 5
+  condition:
+    - condition: template
+      value_template: '{{states(''sensor.home_assistant_not_restarted_recently'')}}'
+  action:
+  - service: notify.149twitter
+    data:
+      # Skull emoticon
+      message: "\U0001F40D: Help! Water! \U0001f480\U0001f480\U0001f480 @craigjward @jess_cable"
+
+- alias: Snake Plant - enough water
+  initial_state: 'on'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.snake_plant_moisture
+    above: 50
+  condition:
+    - condition: template
+      value_template: '{{states(''sensor.home_assistant_not_restarted_recently'')}}'
+    - condition: state
+      entity_id: input_boolean.snake_plant_thanks
+      state: 'off'
+  action:
+  - service: notify.149twitter
+    data:
+      message: "\U0001F40D: sssssankssssss ssssso much better hssssssss. \U0001f3a0 @craigjward @jess_cable"
+  - service: homeassistant.turn_on
+    entity_id: input_boolean.snake_plant_thanks
+

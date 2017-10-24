@@ -1,0 +1,75 @@
+- name: Jessica
+  entities:
+    light.livingroom_main:
+      state: on
+      brightness: 48
+    light.tv:
+      state: on
+      brightness: 103
+      rgb_color: [240, 132, 0]
+    light.bedroom_fan_1:
+      state: off
+    light.credenza:
+      state: off
+    light.kitchen_cabinets:
+      state: on
+      brightness: 254
+      rgb_color: [255, 0, 2]
+    light.craigs_bedroom_lamp:
+      state: on
+      brightness: 13
+      rgb_color: [101, 19, 121]
+    light.dimmable_light_2:
+      state: off
+    light.bathroom:
+      state: off
+    light.upstairs_corridor:
+      state: on
+      brightness: 58
+    light.dining_room:
+      state: on
+      brightness: 48
+    light.kitchen_2:
+      state: off
+    light.bedroom_fan_2:
+      state: off
+    light.jessicas_bedroom_lamp:
+      state: on
+      brightness: 14
+      rgb_color: [106, 20, 120]
+    light.office_desk_lamp:
+      state: off
+    light.office_main:
+      state: off
+    light.christmas_tree:
+      state: off
+    light.porch:
+      state: on
+      brightness: 7
+      rgb_color: [71, 9, 108]
+    light.kitchen_1:
+      state: off
+    light.livingroom_lamp:
+      state: on
+      brightness: 53
+      rgb_color: [194, 45, 225]
+    light.bonus_room:
+      state: on
+      brightness: 57
+      rgb_color: [216, 56, 0]
+    light.entryway:
+      state: on
+      brightness: 11
+      rgb_color: [82, 13, 155]
+    light.downstairs:
+      state: on
+      brightness: 100
+      rgb_color: [0, 63, 255]
+    light.tv_strips:
+      state: off
+    light.kitchen_3:
+      state: off
+    light.dimmable_light_1:
+      state: off
+    light.orb:
+      state: off

@@ -1,0 +1,41 @@
+scene_panel:
+    name: Scenes
+    entities:
+      - input_boolean.night_mode
+      - input_boolean.movie_mode
+      - scene.bedtime
+      - scene.evening
+
+
+laundry:
+    name: Laundry
+    entities:
+      - sensor.dryer_status
+      - sensor.washer_status
+
+fiddle:
+    name: FiddleLeaf
+    entities:
+      - sensor.fiddleleaf_fig_battery 
+      - sensor.fiddleleaf_fig_conductivity  
+      - sensor.fiddleleaf_fig_light_intensity 
+      - sensor.fiddleleaf_fig_moisture  
+      - sensor.fiddleleaf_fig_temperature 
+
+office_ficus:
+    name: Office Plant
+    entities:
+      - sensor.office_ficus_battery 
+      - sensor.office_ficus_conductivity  
+      - sensor.office_ficus_light_intensity 
+      - sensor.office_ficus_moisture  
+      - sensor.office_ficus_temperature
+
+snake_plant:
+    name: Snake Plant
+    entities:
+      - sensor.snake_plant_battery 
+      - sensor.snake_plant_conductivity  
+      - sensor.snake_plant_light_intensity 
+      - sensor.snake_plant_moisture  
+      - sensor.snake_plant_temperature

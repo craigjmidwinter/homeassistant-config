@@ -1,0 +1,38 @@
+default_view:
+  name: DEFAULT
+  icon: mdi:home
+  view: yes
+  entities:
+    - group.main_floor
+    - group.kitchen
+    - group.upstairs
+    - group.basement
+    - group.air_conditioners
+    - updater.updater
+    - group.scene_panel
+    - device_tracker.craig_craig
+    - device_tracker.jess_iphone
+    - alarm_control_panel.total_connect
+
+sensors:
+  name: DEFAULT
+  icon: mdi:heart-pulse
+  view: yes
+  entities:
+    - group.laundry
+    - group.locations
+    - group.fiddle
+    - group.office_ficus
+    - group.snake_plant
+media:
+  name: DEFAULT
+  icon: mdi:filmstrip
+  view: yes
+  entities:
+    - media_player.bedroom_home
+    - media_player.living_room_home
+    - media_player.bedroom_kodi
+    - media_player.living_room
+    - media_player.everywhere
+    - media_player.main_floor
+    - media_player.office

@@ -1,0 +1,60 @@
+basement:
+  name: Basement
+  entities:
+    - group.basement_lights
+basement_lights:
+  name: Basement
+  entities:
+    - light.basement_1
+    - light.basement_2
+    - light.basement_3
+main_floor:
+  name: Main Floor
+  entities:
+    - group.kitchen
+    - light.dining_room
+    - light.livingroom_main
+    - light.livingroom_lamp
+    - light.entryway
+    - light.tv
+    - light.porch
+    - light.tv_strips
+    - light.bonus_room
+kitchen:
+  name: Kitchen
+  entities:
+    - light.kitchen_pendulums
+    - light.kitchen_wall
+air_conditioners:
+  name: Air Conditioners
+  entities:
+    - switch.main_floor_ac
+    - switch.bedroom_ac
+bedroom_fan:
+  name: Bedroom Fan
+  entities:
+    - light.bedroom_fan_1
+    - light.bedroom_fan_2
+bedroom:
+  name: Bedroom
+  entities:
+    - group.bedroom_fan
+    - light.craigs_bedroom_lamp
+    - light.jessicas_bedroom_lamp
+office:
+  name: Office
+  entities:
+    - light.office_desk_lamp
+    - light.office_lamp
+    - light.office_main
+upstairs:
+  name: Upstairs
+  entities:
+    - group.bedroom_fan
+    - light.craigs_bedroom_lamp
+    - light.jessicas_bedroom_lamp
+    - light.office_desk_lamp
+    - light.office_lamp
+    - light.office_main
+    - light.bathroom
+    - light.upstairs_corridor

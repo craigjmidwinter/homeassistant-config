@@ -1,0 +1,16 @@
+locations:
+  name: Locations
+  entities:
+    - camera.craig
+    - camera.jess
+
+wagglers:
+  name: Locations
+  entities:
+    - camera.waggler_1
+    - camera.waggler_2
+
+mainfloor_status:
+  name: Mainfloor mainfloor_status
+  entities:
+    - sensor.brightness

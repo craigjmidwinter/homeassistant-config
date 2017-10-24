@@ -1,0 +1,258 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: 49.882584
+  longitude: -97.163657
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 234
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Winnipeg
+
+  customize: !include customize.yaml
+
+
+  
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables the frontend
+frontend:
+
+config:
+
+http:
+  api_password: !secret http_password
+  ssl_certificate:  !secret http_ssl_cert 
+  ssl_key: !secret http_ssl_key 
+  ip_ban_enabled: True
+  login_attempts_threshold: 5
+  base_url: !secret http_base_url
+  trusted_networks:
+    - 192.168.0.0/16
+
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+tts:
+  - platform: google
+
+    #insteon_local:
+    #host: 192.168.0.2
+    #username: craig
+    #password: !secret insteon_password
+
+light:
+    #  - platform: insteon_local
+    #    scan_interval: 300
+  - platform: hue
+    host: 192.168.0.10
+
+media_player 1:
+  - platform: kodi
+    name: living_room
+    host: 192.168.0.211
+media_player 2:    
+  - platform: kodi
+    name: bedroom_kodi
+    host: 192.168.0.66   
+
+# Weather Prediction
+sensor:
+  - platform: yr
+  - platform: mqtt
+    state_topic: 'LightSensor'
+    name: 'Brightness'
+    value_template: '{{ value_json.value }}'
+
+  - platform: mqtt
+    icon: mdi:washing-machine
+    name: "Dryer Status"
+    state_topic: "sensor/dryer"
+    unit_of_measurement: ""
+
+  - platform: mqtt
+    icon: mdi:washing-machine
+    name: "Washer Status"
+    state_topic: "sensor/washer"
+    unit_of_measurement: ""
+
+  - platform: miflora
+    mac: 'C4:7C:8D:61:D7:A6'
+    name: "Office Ficus"
+  - platform: miflora
+    mac: 'C4:7C:8D:61:D4:61'
+    name: "Fiddle-leaf Fig"
+  - platform: miflora
+    mac: 'C4:7C:8D:61:FF:AA'
+    name: "Snake plant"
+
+  - platform: command_line
+    name: Time Since Last Home Assistant Restart
+    command: 'echo "$(($(date +%s) - $(date --date="`systemctl show home-assistant@homeassistant.service -p ActiveEnterTimestamp --value`" "+%s")))"'
+    unit_of_measurement: 'seconds'
+  - platform: template
+    sensors:
+      home_assistant_not_restarted_recently:
+        value_template: '{% if states(''sensor.time_since_last_home_assistant_restart'') | float > 20 %}true{% else %}false{% endif %}'
+mqtt:
+  broker: 192.168.0.22
+  port: 1883
+  client_id: 149-walnut
+  keepalive: 60
+  birth_message:
+    topic: 'hass/status'
+    payload: 'online'
+    qos: 1
+    retain: true
+  will_message:
+    topic: 'hass/status'
+    payload: 'offline'
+    qos: 1
+    retain: true
+
+device_tracker:
+  - platform: owntracks
+    max_gps_accuracy: 1000
+    #  - platform: dlink
+    #host: 192.168.0.1
+    #password: !secret dlink_password
+    #scan_interval: 180
+  - platform: gplus
+    id: craig_craig
+    url: 'https://plus.google.com/_/PlusAppUi/data' 
+    cookie_sid: 'SwX2UdMU_xOUP8FxLec541atpzDWyqtcvFcxmIbZ4LQltSwcMpySed3M_RZuo53HM4Wt2g'
+    cookie_hsid: 'AOioqxWZm9I4MsZ14'
+    cookie_ssid: 'A1np64NKyhdk4kKD5'
+    data_freq: '[[[64399324,[{"64399324":[null,null,[[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,[[null,[2,null,"110868210227092663840"]]]],[null,null,null,null,[[null,[2,null,"110868210227092663840"]]]],[null,null,null,null,null,null,null,null,null,null,null,null,[[null,[2,null,"110868210227092663840"]]]],[null,null,null,[[null,[2,null,"110868210227092663840"]],5,null]],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,[[null,[2,null,"110868210227092663840"]]]],[null,null,null,null,null,null,null,null,null,null,[[null,[2,null,"110868210227092663840"]]]],[null,null,null,null,null,null,null,null,null,null,null,[[null,[2,null,"110868210227092663840"]]]],[null,null,null,null,null,null,null,null,[[null,[2,null,"110868210227092663840"]]]],[null,[[null,[2,null,"110868210227092663840"]],3]]],[null,[2,null,"110868210227092663840"]],null]}],null,null,0]]]'
+    home_url: 'https://plus.google.com/110868210227092663840' 
+
+camera:
+  - name: Craig
+    platform: generic
+    still_image_url: https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.craig_craig.attributes.latitude }},{{ states.device_tracker.craig_craig.attributes.longitude }}&zoom=15&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:C%7C{{ states.device_tracker.craig_craig.attributes.latitude }},{{ states.device_tracker.craig_craig.attributes.longitude }}
+    # limit_refetch_to_url_change: true
+  - name: Jess
+    platform: generic
+    still_image_url: https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.jess_iphone.attributes.latitude }},{{ states.device_tracker.jess_iphone.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:red%7Clabel:J%7C{{ states.device_tracker.jess_iphone.attributes.latitude }},{{ states.device_tracker.jess_iphone.attributes.longitude }}
+    # limit_refetch_to_url_change: true  
+
+remote:
+  - platform: harmony
+    name: HarmonyRemote
+    host: 192.168.0.110
+
+input_boolean:
+  test:
+    name: test
+    initial: off
+    icon: mdi:sleep   
+  night_mode:
+    name: Night Mode
+    initial: off
+    icon: mdi:sleep   
+  movie_mode:
+    name: Movie Mode
+    initial: off
+    icon: mdi:movie
+  bedtime:
+    name: Bed Time
+    initial: off
+    icon: mdi:sleep
+  jessica:
+    name: Jessica
+    initial: off
+    icon: mdi:sleep
+  evening:
+    name: Evening
+    initial: off
+  dryer:
+    name: Dryer
+    initial: off
+  washer:
+    name: Washer
+    initial: off
+  fiddle_leaf_thanks:
+    initial: on
+  snake_plant_thanks:
+    initial: on
+  office_ficus_thanks:
+    initial: on
+
+recorder:
+  db_url: !secret db_url
+
+updater:
+
+notify:
+  - name: push
+    platform: simplepush
+    device_key: mNHckh
+  - platform: kodi
+    name: kodi
+    host: 192.168.0.211
+  - name: 149-twitter
+    platform: twitter
+    consumer_key: !secret twitter_consumer_key
+    consumer_secret: !secret twitter_consumer_secret
+    access_token: !secret twitter_access_token 
+    access_token_secret: !secret twitter_access_token_secret
+
+group: !include_dir_merge_named groups
+
+emulated_hue:
+  type: google_home
+  # Google Home does not work on different ports.
+  listen_port: 80
+
+automation: !include_dir_merge_list automation
+# automation: !include automations.yaml
+
+scene: !include_dir_merge_list scene
+
+zone: !include zones/zones.yaml
+
+zeroconf:
+
+alarm_control_panel:
+  platform: totalconnect
+  username: !secret alarm_user
+  password: !secret alarm_password
+
+panel_iframe:
+  graph:
+    title: Graph
+    icon: mdi:vector-polyline
+    url: "http://149walnut.publicvm.com:8123/local/graph.html"
+
+shell_command:
+  generate_graph: "python3 -m hagraph -i /home/homeassistant/.homeassistant/configuration.yaml -o /home/homeassistant/.homeassistant/www/graph.svg"
+
+switch openhab:
+  platform: openhab
+  host: http://127.0.0.1:8080
+light openhab:
+  platform: openhab
+  host: http://127.0.0.1:8080
+sensor openhab:
+  platform: openhab
+  host: http://127.0.0.1:8080
+  #switch:
+  #  - platform: insteon_local
+#switch: !include_dir_merge_list switch
+#script: !include_dir_merge_named script

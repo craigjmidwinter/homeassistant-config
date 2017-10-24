@@ -1,0 +1,17 @@
+- alias: 'Test Automation'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: input_boolean.test
+    to: 'on'
+  action:
+  - service: notify.kodi
+    data:
+      title: "I love you"
+      message: "I love you Jessica!"
+      data:
+        displaytime: 10000
+        icon: "http://kids.nationalgeographic.com/content/dam/kids/photos/articles/Science/H-P/heart.jpg"
+  - service: notify.push
+    data:
+      message: "test notification"

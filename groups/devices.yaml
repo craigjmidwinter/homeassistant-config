@@ -1,0 +1,27 @@
+craig_and_jess:
+    name: Craig and Jess
+    entities:
+      - device_tracker.craig_craig
+      - device_tracker.jess_iphone
+
+trackers:
+    name: Trackers
+    entities:
+      - device_tracker.craig_craig
+      - device_tracker.jess_iphone
+
+craig_trackers:
+    name: Craig Trackers
+    entities:
+      - device_tracker.craig_craig
+
+jess_trackers:
+    name: Jess Trackers
+    entities:
+      - device_tracker.jess_iphone
+
+air_conditioners:
+  name: Air Conditioners
+  entities:
+    - switch.main_floor_ac
+    - switch.bedroom_ac

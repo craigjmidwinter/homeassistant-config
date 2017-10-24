@@ -1,0 +1,374 @@
+- alias: 'Dryer is done'
+  id: dryer_done
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: sensor.dryer_status
+    from: 'Running'
+    to: 'Stopped'      
+  action:
+  - service: notify.push
+    data:
+      message: "Dryer has stopped running." 
+  - service: tts.google_say
+    entity_id: media_player.everywhere
+    data:
+      message: 'The dryer has stopped running.'
+
+
+- alias: 'Washer is done'
+  id: washer_done
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: sensor.washer_status
+    from: 'Running'
+    to: 'Stopped'      
+  action:
+  - service: notify.push
+    data:
+      message: "Washer has stopped running." 
+  - service: tts.google_say
+    entity_id: media_player.everywhere
+    data:
+      message: 'The washer has stopped running.'
+
+- alias: 'Trigger Movie Mode living room lights off'
+  id: movie_mode_on
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: input_boolean.movie_mode
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: media_player.living_room
+    state: 'playing'
+  action:
+    service: scene.turn_on
+    entity_id: scene.livingroom_movie
+
+- alias: 'Trigger Movie Mode living room lights on'
+  id: movie_mode_off
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: input_boolean.movie_mode
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: input_boolean.night_mode
+    state: 'off'
+  action:
+    service: homeassistant.turn_on
+    entity_id: group.main_floor
+
+
+- alias: 'Trigger Movie Mode living room'
+  id: movie_mode_off
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: media_player.living_room
+    from: 'playing'
+  condition:
+    condition: state
+    entity_id: media_player.living_room
+    state: 'off'
+  action:
+    service: homeassistant.turn_on
+    entity_id: group.main_floor
+
+
+- alias: 'Living room movie - stopped'
+  id: movie_mode_stop
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: media_player.living_room
+    from: 'playing'
+  condition:
+    condition: state
+    entity_id: input_boolean.movie_mode
+    state: 'on'
+  action:
+    service: homeassistant.turn_on
+    entity_id: group.main_floor
+
+- alias: 'Living room movie - playing'
+  id: movie_mode_play
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: media_player.living_room
+    to: 'playing'
+  condition:
+    condition: state
+    entity_id: input_boolean.movie_mode
+    state: 'on'
+  action:
+    service: scene.turn_on
+    entity_id: scene.livingroom_movie
+
+- alias: 'Someone is Home'
+  id: someone_home
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: group.trackers
+    from: 'not_home'
+    to: 'home'
+  condition:
+  - condition: state
+    entity_id: input_boolean.night_mode
+    state: 'off'
+  - condition: state
+    entity_id: 'sun.sun'
+    state: 'below_horizon'      
+  action:
+   service: scene.turn_on
+   entity_id: scene.evening      
+
+
+- alias: 'Nobody is Home'
+  id: nobody_home
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: group.trackers
+    from: 'home'
+    to: 'not_home'  
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+  action:
+  - service: scene.turn_on
+    entity_id: scene.away
+  - service: scene.turn_on
+    entity_id: scene.away
+
+- alias: 'Nobody is Home'
+  id: nobody_home_arm
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: group.trackers
+    from: 'home'
+    to: 'not_home'  
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+  condition:
+  - condition: state
+    entity_id: alarm_control_panel.totalconnectclient 
+    state: 'disarmed'
+  action:
+  - service: alarm_control_panel.alarm_arm_home
+
+- alias: 'Jess is home'
+  id: jess_home_notify
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: device_tracker.jess_iphone
+    to: 'home'
+  condition:
+  - condition: state
+    entity_id: device_tracker.craig_craig
+    state: 'not_home'
+  action:
+    service: notify.push
+    data:
+      message: "Jess is home"
+
+- alias: 'Jess is leaving the gym'
+  id: jess_leave_gym_notify
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: device_tracker.jess_iphone
+    from: 'gym'
+  action:
+    service: notify.push
+    data:
+      message: "Jess is leaving the gym"
+
+- alias: 'Jess has arrived the gym'
+  id: jess_arrive_gym_notify
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: device_tracker.jess_iphone
+    to: 'gym'
+  action:
+    service: notify.push
+    data:
+      message: "Jess has arrived the gym"
+
+- alias: 'Sunset'
+  id: sunset
+  initial_state: 'on'
+  trigger:
+    platform: sun
+    event: sunset
+    offset: "-01:30:00"
+  condition:
+    - condition: state
+      entity_id: group.trackers
+      state: home
+  action:
+    service: scene.turn_on
+    entity_id: scene.evening
+
+- alias: 'Late Evening'
+  id: late_evening
+  initial_state: 'on'
+  trigger:
+    platform: time
+    after: '21:30:00'    
+  condition:
+    - condition: state
+      entity_id: group.trackers
+      state: home
+    - condition: state
+      entity_id: 'sun.sun'
+      state: 'below_horizon'  
+  action:
+    service: scene.turn_on
+    entity_id: scene.late_evening
+
+- alias: 'Night'
+  id: night
+  initial_state: 'on'
+  trigger:
+    platform: time
+    after: '00:00:00'    
+  condition:
+    - condition: state
+      entity_id: group.trackers
+      state: home 
+    - condition: time    
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - sun 
+  action:
+    - service: scene.turn_on
+      entity_id: scene.night
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.night_mode
+    - service: alarm_control_panel.alarm_arm_home
+
+- alias: 'Morning - weekday'
+  id: morning-weekday
+  initial_state: 'on'
+  trigger:
+    platform: time
+    after: '07:00:00'    
+  condition:
+    - condition: state
+      entity_id: group.trackers
+      state: home 
+    - condition: time    
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri      
+  action:
+    - service: scene.turn_on
+      entity_id: scene.morning
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.night_mode
+
+- alias: 'Morning - weekend'
+  id: morning-weekend
+  initial_state: 'on'
+  trigger:
+    platform: time
+    after: '09:00:00'    
+  condition:
+    - condition: state
+      entity_id: group.trackers
+      state: home 
+    - condition: time    
+      weekday:
+        - sat
+        - sun     
+  action:
+    - service: scene.turn_on
+      entity_id: scene.morning
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.night_mode      
+
+- alias: 'Bedtime'
+  id: bedtime
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: input_boolean.bedtime
+    to: 'on'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.bedtime
+  - service: homeassistant.turn_off
+    entity_id: input_boolean.bedtime
+
+- alias: Generate graph
+  id: graph
+  initial_state: 'on'
+  trigger:
+    platform: event
+    event_type: homeassistant_start
+  action:
+    - service: shell_command.generate_graph
+
+- alias: 'Jessica'
+  id: turn_jess_on
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: input_boolean.jessica
+    to: 'on'
+  action:
+  - service: media_player.play_media
+    data:
+      entity_id: media_player.everywhere
+      media_content_id: http://149walnut.publicvm.com:8123/local/audio/tmd.mp3
+      media_content_type: audio/mp3
+  - service: scene.turn_on
+    entity_id: scene.jessica
+    
+- alias: 'Jessica off'
+  id: turn_jess_off
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: input_boolean.jessica
+    to: 'off'
+  action:
+  - service: media_player.play_media
+    data:
+      entity_id: media_player.everywhere
+      media_content_id: http://149walnut.publicvm.com:8123/local/audio/recordscratch.mp3
+      media_content_type: audio/mp3
+  - service: scene.turn_on
+    entity_id: scene.evening
+
+- alias: 'Evening'
+  id: evening
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: input_boolean.evening
+    to: 'on'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.evening
+  - service: homeassistant.turn_off
+    entity_id: input_boolean.evening

@@ -1,0 +1,86 @@
+- alias: 'Washer is stopped'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: sensor.washer_status
+    from: 'Running'
+    to: 'Stopped'      
+    for:
+      minutes: 3
+  action:
+  - service: homeassistant.turn_off
+    entity_id: input_boolean.washer
+    
+- alias: 'Dryer is stopped'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: sensor.dryer_status
+    from: 'Running'
+    to: 'Stopped'      
+    for:
+      minutes: 3
+  action:
+  - service: homeassistant.turn_off
+    entity_id: input_boolean.dryer
+
+- alias: 'Washer is running'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: sensor.washer_status
+    from: 'Stopped'
+    to: 'Running'      
+    for:
+      minutes: 5
+  action:
+  - service: homeassistant.turn_on
+    entity_id: input_boolean.washer
+
+- alias: 'Dryer is running'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: sensor.dryer_status
+    from: 'Stopped'
+    to: 'Running'      
+    for:
+      minutes: 1
+  action:
+  - service: homeassistant.turn_on
+    entity_id: input_boolean.dryer
+
+- alias: 'Washer is done'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: input_boolean.washer
+    from: 'on'
+    to: 'off'      
+  action:
+  - service: notify.push
+    data:
+      message: "Washer has stopped running." 
+  - service: tts.google_say
+    entity_id: media_player.everywhere
+    data:
+      message: 'The washer has stopped running.'
+
+- alias: 'Dryer is done'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: input_boolean.dryer
+    from: 'on'
+    to: 'off'      
+  action:
+  - service: notify.push
+    data:
+      message: "Dryer has stopped running." 
+  - service: tts.google_say
+    entity_id: media_player.everywhere
+    data:
+      message: 'The dryer has stopped running.'
+  - service: notify.149twitter
+    data:
+      message: "The dryer has stopped running \U0001F525\U0001F4A8 @craigjward @jess_cable"

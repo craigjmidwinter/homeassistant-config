@@ -1,0 +1,25 @@
+- alias: 'Basement light on'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: light.basement_1
+    from: 'off'
+    to: 'on'
+  action:
+  - service: homeassistant.turn_on
+    entity_id: light.basement_2
+  - service: homeassistant.turn_on
+    entity_id: light.basement_3 
+
+- alias: 'Basement light off'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: light.basement_1
+    from: 'on'
+    to: 'off'
+  action:
+  - service: homeassistant.turn_off
+    entity_id: light.basement_2
+  - service: homeassistant.turn_off
+    entity_id: light.basement_3 
